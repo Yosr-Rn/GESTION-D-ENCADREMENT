@@ -1,0 +1,60 @@
+﻿
+
+@model IEnumerable<GestionEtudiant.Models.Teacher>
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Teacher</h1>
+@if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+{
+    <p>
+        <a asp-action="Create"><i class="bi bi-clipboard-plus-fill"></i>Create New</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TeacherID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TeacherName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Teacherspeciality)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TeacherID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TeacherName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Teacherspeciality)
+                </td>
+                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.TeacherID"><i class="bi bi-clipboard2-pulse-fill"></i>Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.TeacherID"><i class="bi bi-clipboard2-data-fill"></i>Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.TeacherID"><i class="bi bi-clipboard-x-fill"></i>Delete</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
